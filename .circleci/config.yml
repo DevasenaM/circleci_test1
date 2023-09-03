@@ -1,0 +1,31 @@
+version: 2.1
+#executors:
+#  default-executor:
+#    docker:
+#      - image: circleci/python:3.11  # Use an appropriate Python version
+
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: python addtwonumbers.py
+          
+
+  test:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: python tests.py
+          
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
